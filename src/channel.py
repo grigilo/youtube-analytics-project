@@ -8,14 +8,12 @@ class Channel:
     api_key: str = os.getenv(
         'YOUTUBE_API_KEY')  # YOUTUBE_API_KEY скопирован из гугла и вставлен в переменные окружения
 
-    youtube = build('youtube', 'v3', developerKey=api_key)  # создать специальный объект для работы с API
-
     def __init__(self, channel_id: str) -> None:
         """
         Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API.
         """
         self.channel_id = channel_id
-        channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        channel = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
         self.title = channel['items'][0]['snippet']['title']
         self.description = channel['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{self.channel_id}'
@@ -36,7 +34,8 @@ class Channel:
         """
         Возвращает объект для работы с YouTube API
         """
-        return cls.youtube
+        youtube = build('youtube', 'v3', developerKey=Channel.api_key)
+        return youtube
 
     def to_json(self, file_name):
         """Сохраняет в Json файл значения атрибутов экземпляра - информацию о канале"""
