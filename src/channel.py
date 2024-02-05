@@ -44,6 +44,9 @@ class Channel:
     def __lt__(self, other):
         return int(self.subscriber_count) < int(other.subscriber_count)
 
+    def __eq__(self, other):
+        return int(self.subscriber_count) == int(other.subscriber_count)
+
     def print_info(self) -> None:
         """
         Выводит в консоль информацию о канале.
