@@ -30,7 +30,10 @@ class Channel:
     def __add__(self, other):
         """
         """
-        return int(self.subscriber_count) + int(other.subscriber_count)
+        if type(self.subscriber_count) == type(other.subscriber_count):
+            return int(self.subscriber_count) + int(other.subscriber_count)
+        else:
+            return "Ошибка типа данных"
 
     def __sub__(self, other):
         return int(self.subscriber_count) - int(other.subscriber_count)
