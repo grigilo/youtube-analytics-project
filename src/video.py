@@ -45,13 +45,14 @@ class Video:
 
 class PLVideo(Video):
     def __init__(self, video_id, playlist_id):
-        self.video_id = video_id
-        response = self.get_service().videos().list(part="snippet,contentDetails,statistics", id=video_id).execute()
+        # self.video_id = video_id
+        # response = self.get_service().videos().list(part="snippet,contentDetails,statistics", id=video_id).execute()
+        super().__init__(video_id)
         self.playlist_id = playlist_id
-        self.title = response['items'][0]['snippet']['title']
-        self.url = f'https://www.youtube.com/channel/{response['items'][0]['snippet']['channelId']}'
-        self.view_count = response['items'][0]['statistics']['viewCount']
-        self.like_count = response['items'][0]['statistics']['likeCount']
+        # self.title = response['items'][0]['snippet']['title']
+        # self.url = f'https://www.youtube.com/channel/{response['items'][0]['snippet']['channelId']}'
+        # self.view_count = response['items'][0]['statistics']['viewCount']
+        # self.like_count = response['items'][0]['statistics']['likeCount']
 
     def __str__(self):
         return self.title
