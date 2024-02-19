@@ -12,11 +12,18 @@ class Video:
         Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API.
         """
         self.video_id = video_id
-        response = self.get_service().videos().list(part="snippet,contentDetails,statistics", id=video_id).execute()
-        self.title = response['items'][0]['snippet']['title']
-        self.url = f'https://www.youtube.com/channel/{response['items'][0]['snippet']['channelId']}'
-        self.view_count = response['items'][0]['statistics']['viewCount']
-        self.like_count = response['items'][0]['statistics']['likeCount']
+        try:
+
+            response = self.get_service().videos().list(part="snippet,contentDetails,statistics", id=video_id).execute()
+            self.title = response['items'][0]['snippet']['title']
+            self.url = f'https://www.youtube.com/channel/{response['items'][0]['snippet']['channelId']}'
+            self.view_count = response['items'][0]['statistics']['viewCount']
+            self.like_count = response['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
 
     def get_response(self):
         response = self.get_service().videos().list(part="snippet,contentDetails,statistics", id=video_id).execute()
